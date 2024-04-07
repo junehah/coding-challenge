@@ -29,25 +29,7 @@ namespace CodeChallenge.Controllers
             if (employee == null)
                 return NotFound();
 
-            var reportingNum = 0;
-
-            if (employee.DirectReports is not null)
-            {
-                reportingNum = employee.DirectReports.Count();
-                foreach (var x in employee.DirectReports)
-                {
-                    //update cuz this is disgusting.  
-                    //any child employee does not return their direct reports.  
-                    var tempEmployee = _employeeService.GetById(x.EmployeeId);
-                    if (tempEmployee.DirectReports.Any())
-                    {
-                        reportingNum += x.DirectReports.Count();
-                    }
-                    //may not need this as needed as it might return an employee object for each directReport
-                    //if (x.DirectReports is not null)
-                    //    reportingNum += x.DirectReports.Count();
-                }
-            }
+            var reportingNum = GetReportingAmount(employee);
 
             var reportingStructure = new ReportingStructure
             {
@@ -56,6 +38,22 @@ namespace CodeChallenge.Controllers
             };
 
             return Ok(reportingStructure);
+        }
+
+
+        private int GetReportingAmount(Employee employee)
+        {
+            var result = employee.DirectReports.Count();
+            foreach(var x in  employee.DirectReports)
+            {
+                _employeeService.GetById(x.EmployeeId);
+                if (x.DirectReports.Any())
+                {
+                    result += GetReportingAmount(x);
+                }
+            }
+
+            return result;
         }
     }
 }
