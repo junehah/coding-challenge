@@ -20,8 +20,8 @@ namespace CodeChallenge.Repositories
 
         public Compensation Add(Compensation compensation)
         {
-            if (_employeeContext.Compensations.Any(c => c.Id == compensation.Id))
-                throw new Exception("A record with this Id already exists in the Compensation Table");
+            //if (_employeeContext.Compensations.Any(c => c.Id == compensation.Id))
+            //    throw new Exception("A record with this Id already exists in the Compensation Table");
 
             _employeeContext.Compensations.Add(compensation);
 

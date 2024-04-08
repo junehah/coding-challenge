@@ -2,13 +2,14 @@
 using CodeChallenge.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 using System;
 
 namespace CodeChallenge.Controllers
 {
     [ApiController]
     [Route("api/compensation")]
-    public class CompensationController : ControllerBase
+    public class CompensationController :ControllerBase
     {
         private readonly ILogger _logger;
         private readonly ICompensationService _compensationService;
@@ -50,12 +51,12 @@ namespace CodeChallenge.Controllers
         {
             _logger.LogDebug($"Received compensation get request for '{id}'");
 
-            var employee = _compensationService.GetById(id);
+            var compensation = _compensationService.GetById(id);
 
-            if (employee == null)
+            if (compensation == null)
                 return NotFound();
 
-            return Ok(employee);
+            return Ok(compensation);
         }
     }
 }

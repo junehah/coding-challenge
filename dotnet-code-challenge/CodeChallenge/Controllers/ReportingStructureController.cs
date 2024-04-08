@@ -40,7 +40,6 @@ namespace CodeChallenge.Controllers
             return Ok(reportingStructure);
         }
 
-
         private int GetReportingAmount(Employee employee)
         {
             var result = employee.DirectReports.Count();
