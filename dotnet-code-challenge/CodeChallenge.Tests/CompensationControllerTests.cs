@@ -84,5 +84,19 @@ namespace CodeChallenge.Tests.Integration
             Assert.AreEqual(compensation.Salary, salary);
             Assert.IsNotNull(compensation.Employee);
         }
+
+        [TestMethod]
+        public void GetCompensationByEmployeeId_Non_Existant_Employee()
+        {
+            // Arrange
+            var id = Guid.NewGuid().ToString();
+
+            // Execute
+            var getRequestTask = _httpClient.GetAsync($"api/compensation/{id}");
+            var response = getRequestTask.Result;
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        }
     }
 }

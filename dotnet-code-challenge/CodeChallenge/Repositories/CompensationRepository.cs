@@ -32,8 +32,11 @@ namespace CodeChallenge.Repositories
         public Compensation GetById(string id)
         {
             var compensation = _employeeContext.Compensations.Where(c=> c.Id == id).SingleOrDefault();
-            compensation.Employee = _employeeContext.Employees.Where(e => e.EmployeeId == id)
-                .Include(x => x.DirectReports).SingleOrDefault();
+            if (compensation != null)
+            {
+                compensation.Employee = _employeeContext.Employees.Where(e => e.EmployeeId == id)
+                    .Include(x => x.DirectReports).SingleOrDefault();
+            }
             return compensation;
         }
 
