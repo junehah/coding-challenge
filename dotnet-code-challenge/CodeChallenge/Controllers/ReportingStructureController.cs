@@ -46,10 +46,10 @@ namespace CodeChallenge.Controllers
             var result = employee.DirectReports.Count();
             foreach(var x in  employee.DirectReports)
             {
-                _employeeService.GetById(x.EmployeeId);
-                if (x.DirectReports.Any())
+                var temp = _employeeService.GetById(x.EmployeeId);
+                if (temp.DirectReports.Any())
                 {
-                    result += GetReportingAmount(x);
+                    result += GetReportingAmount(temp);
                 }
             }
 

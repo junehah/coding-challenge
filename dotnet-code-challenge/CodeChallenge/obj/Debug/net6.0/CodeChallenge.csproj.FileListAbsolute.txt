@@ -34,6 +34,7 @@ C:\Users\AeroPCD\Documents\MindEx Coding\dotnet-code-challenge\CodeChallenge\obj
 C:\Users\AeroPCD\Documents\MindEx Coding\dotnet-code-challenge\CodeChallenge\obj\Debug\net6.0\ref\CodeChallenge.dll
 C:\Users\AeroPCD\Documents\MindExCoding\dotnet-code-challenge\CodeChallenge\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\AeroPCD\Documents\MindExCoding\dotnet-code-challenge\CodeChallenge\bin\Debug\net6.0\appsettings.json
+C:\Users\AeroPCD\Documents\MindExCoding\dotnet-code-challenge\CodeChallenge\bin\Debug\net6.0\resources\CompensationSeedData.json
 C:\Users\AeroPCD\Documents\MindExCoding\dotnet-code-challenge\CodeChallenge\bin\Debug\net6.0\resources\EmployeeSeedData.json
 C:\Users\AeroPCD\Documents\MindExCoding\dotnet-code-challenge\CodeChallenge\bin\Debug\net6.0\CodeChallenge.exe
 C:\Users\AeroPCD\Documents\MindExCoding\dotnet-code-challenge\CodeChallenge\bin\Debug\net6.0\CodeChallenge.deps.json

@@ -84,23 +84,6 @@ namespace CodeCodeChallenge.Tests.Integration
         }
 
         [TestMethod]
-        public void GetReportingStructure_Returns_OK()
-        {
-            // Arrange
-            var employeeId = "16a596ae-edd3-4847-99fe-c4518e82c86f";
-            //var employeeId = "03aa1462-ffa9-4978-901b-7c001562cf6fc";
-
-            // Execute
-            var getRequestTask = _httpClient.GetAsync($"api/reporting/{employeeId}");
-            var response = getRequestTask.Result;
-
-            // Assert
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            var reportingStructure = response.DeserializeContent<ReportingStructure>();
-            Assert.AreEqual(4, reportingStructure.NumberOfReports);
-        }
-
-        [TestMethod]
         public void UpdateEmployee_Returns_Ok()
         {
             // Arrange

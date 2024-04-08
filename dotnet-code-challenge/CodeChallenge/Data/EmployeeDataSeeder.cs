@@ -12,6 +12,7 @@ namespace CodeChallenge.Data
     {
         private EmployeeContext _employeeContext;
         private const String EMPLOYEE_SEED_DATA_FILE = "resources/EmployeeSeedData.json";
+        private const String COMPENSATION_SEED_DATA_FILE = "resources/CompensationSeedData.json";
 
         public EmployeeDataSeeder(EmployeeContext employeeContext)
         {
@@ -24,6 +25,14 @@ namespace CodeChallenge.Data
             {
                 List<Employee> employees = LoadEmployees();
                 _employeeContext.Employees.AddRange(employees);
+
+                await _employeeContext.SaveChangesAsync();
+            }
+
+            if (!_employeeContext.Compensations.Any())
+            {
+                List<Compensation> compensations = LoadCompensations();
+                _employeeContext.Compensations.AddRange(compensations);
 
                 await _employeeContext.SaveChangesAsync();
             }
@@ -43,6 +52,31 @@ namespace CodeChallenge.Data
                 return employees;
             }
         }
+
+        private List<Compensation> LoadCompensations()
+        {
+            using (FileStream fs = new FileStream(COMPENSATION_SEED_DATA_FILE, FileMode.Open))
+            using (StreamReader sr = new StreamReader(fs))
+            using (JsonReader jr = new JsonTextReader(sr))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+
+                List<Compensation> compensations = serializer.Deserialize<List<Compensation>>(jr);
+
+                return compensations;
+            }
+        }
+
+        //private void FixUpCompensationReferences(List<Compensation> compensations)
+        //{
+        //    var compensationIdRefMap = from compensation in compensations
+        //                               select new { Id = compensation.id, CompensationRef = compensation };
+
+        //    compensations.ForEach(compensation =>
+        //    {
+        //        var compensationId = compensation.id;
+        //    })
+        //}
 
         private void FixUpReferences(List<Employee> employees)
         {

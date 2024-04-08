@@ -1,9 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using CodeChallenge.Models;
+using CodeChallenge.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using CodeChallenge.Services;
-using CodeChallenge.Models;
+using System;
 
 namespace CodeChallenge.Controllers
 {
@@ -12,22 +11,38 @@ namespace CodeChallenge.Controllers
     public class CompensationController : ControllerBase
     {
         private readonly ILogger _logger;
+        private readonly ICompensationService _compensationService;
         private readonly IEmployeeService _employeeService;
 
-        public CompensationController(ILogger<CompensationController> logger, IEmployeeService employeeService)
+        public CompensationController(ILogger<CompensationController> logger,
+            ICompensationService compensationService,
+            IEmployeeService employeeService)
         {
             _logger = logger;
+            _compensationService = compensationService;
             _employeeService = employeeService;
         }
 
         [HttpPost]
-        public IActionResult CreateCompensationByEmployeeId([FromBody] Employee employee, double salary, DateTime effectiveDate)
+        public IActionResult CreateCompensation([FromBody] Compensation comp)
         {
-            _logger.LogDebug($"Received compensation create request for '{employee}'");
+            _logger.LogDebug($"Received compensation create request for '{comp.Id}'");
 
-            _employeeService.Create(employee);
+            var employee = _employeeService.GetById(comp.Id);
+            if (employee == null)
+                throw new Exception("Employee not found");
 
-            return CreatedAtRoute("getEmployeeById", new { id = employee.EmployeeId }, employee);
+            var compensation = new Compensation
+            {
+                Id = comp.Id,
+                Employee = employee,
+                Salary = comp.Salary,
+                EffectiveDate = comp.EffectiveDate
+            };
+
+            _compensationService.Create(compensation);
+
+            return CreatedAtRoute("getCompensationById", new { Id = comp.Id }, compensation);
         }
 
         [HttpGet("{id}", Name = "getCompensationByEmployeeId")]
@@ -35,7 +50,7 @@ namespace CodeChallenge.Controllers
         {
             _logger.LogDebug($"Received compensation get request for '{id}'");
 
-            var employee = _employeeService.GetById(id);
+            var employee = _compensationService.GetById(id);
 
             if (employee == null)
                 return NotFound();

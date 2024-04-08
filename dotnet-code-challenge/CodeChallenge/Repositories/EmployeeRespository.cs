@@ -29,7 +29,7 @@ namespace CodeChallenge.Repositories
 
         public Employee GetById(string id)
         {
-           var employee = _employeeContext.Employees.Where(e => e.EmployeeId == id)
+            var employee = _employeeContext.Employees.Where(e => e.EmployeeId == id)
                 .Include(x => x.DirectReports).SingleOrDefault();
 
             return employee;
