@@ -21,6 +21,7 @@ namespace CodeChallenge.Data
 
         public async Task Seed()
         {
+            //loading Employee Seed Data
             if(!_employeeContext.Employees.Any())
             {
                 List<Employee> employees = LoadEmployees();
@@ -29,6 +30,7 @@ namespace CodeChallenge.Data
                 await _employeeContext.SaveChangesAsync();
             }
 
+            //loading Compensation Seed Data
             if (!_employeeContext.Compensations.Any())
             {
                 List<Compensation> compensations = LoadCompensations();
@@ -66,17 +68,6 @@ namespace CodeChallenge.Data
                 return compensations;
             }
         }
-
-        //private void FixUpCompensationReferences(List<Compensation> compensations)
-        //{
-        //    var compensationIdRefMap = from compensation in compensations
-        //                               select new { Id = compensation.id, CompensationRef = compensation };
-
-        //    compensations.ForEach(compensation =>
-        //    {
-        //        var compensationId = compensation.id;
-        //    })
-        //}
 
         private void FixUpReferences(List<Employee> employees)
         {

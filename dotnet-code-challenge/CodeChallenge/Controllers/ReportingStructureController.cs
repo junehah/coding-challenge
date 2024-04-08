@@ -40,6 +40,7 @@ namespace CodeChallenge.Controllers
             return Ok(reportingStructure);
         }
 
+        //recursive method to find nth subordinate
         private int GetReportingAmount(Employee employee)
         {
             var result = employee.DirectReports.Count();
