@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace CodeChallenge.Repositories
 {
@@ -30,8 +31,9 @@ namespace CodeChallenge.Repositories
 
         public Compensation GetById(string id)
         {
-            var compensation = _employeeContext.Compensations.Where(c=> c.Id == id).FirstOrDefault();
-
+            var compensation = _employeeContext.Compensations.Where(c=> c.Id == id).SingleOrDefault();
+            compensation.Employee = _employeeContext.Employees.Where(e => e.EmployeeId == id)
+                .Include(x => x.DirectReports).SingleOrDefault();
             return compensation;
         }
 

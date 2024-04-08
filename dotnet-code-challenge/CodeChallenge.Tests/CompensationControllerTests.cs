@@ -82,6 +82,7 @@ namespace CodeChallenge.Tests.Integration
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             var compensation = response.DeserializeContent<Compensation>();
             Assert.AreEqual(compensation.Salary, salary);
+            Assert.IsNotNull(compensation.Employee);
         }
     }
 }
