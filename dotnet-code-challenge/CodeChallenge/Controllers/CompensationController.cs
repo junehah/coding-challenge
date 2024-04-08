@@ -43,7 +43,7 @@ namespace CodeChallenge.Controllers
 
             _compensationService.Create(compensation);
 
-            return CreatedAtRoute("getCompensationById", new { Id = comp.Id }, compensation);
+            return CreatedAtRoute("getCompensationByEmployeeId", new { Id = comp.Id }, compensation);
         }
 
         [HttpGet("{id}", Name = "getCompensationByEmployeeId")]

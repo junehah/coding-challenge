@@ -34,8 +34,8 @@ namespace CodeChallenge.Tests.Integration
         [TestMethod]
         public void CreateCompensationById_Returns_OK()
         {
-            //Initial Employee Arrangement
-            var employeeId = Guid.NewGuid().ToString();
+            //Arrange
+            var employeeId = "99c9999e-6e34-4630-93fd-9153afb99999";
             double salary = 15000.00;
 
             var employee = new Employee()
@@ -47,12 +47,6 @@ namespace CodeChallenge.Tests.Integration
                 Position = "Compensator",
             };
 
-            var requestContent = new JsonSerialization().ToJson(employee);
-            var postRequestTask = _httpClient.PostAsync("api/employee",
-               new StringContent(requestContent, Encoding.UTF8, "application/json"));
-            var response = postRequestTask.Result;
-
-            //Compensation Arrangement
             var comp = new Compensation()
             {
                 Id = employeeId,
@@ -62,27 +56,26 @@ namespace CodeChallenge.Tests.Integration
             };
 
             // Execute
-            requestContent = new JsonSerialization().ToJson(comp);
-            postRequestTask = _httpClient.PostAsync("api/compensation",
+            var requestContent = new JsonSerialization().ToJson(comp);
+            var postRequestTask = _httpClient.PostAsync("api/compensation",
                new StringContent(requestContent, Encoding.UTF8, "application/json"));
-            response = postRequestTask.Result;
+            var response = postRequestTask.Result;
 
             // Assert
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
             var compensation = response.DeserializeContent<Compensation>();
             Assert.AreEqual(compensation.Salary, salary);
         }
 
-
         [TestMethod]
-        public void GetCompensationById_Returns_Ok()
+        public void GetCompensationByEmployeeId_Returns_Ok()
         {
             // Arrange
-            var employeeId = "16a596ae-edd3-4847-99fe-c4518e82c86f";
+            var id = "16a596ae-edd3-4847-99fe-c4518e82c86f";
             var salary = 150000.00;
 
             // Execute
-            var getRequestTask = _httpClient.GetAsync($"api/compensation/{employeeId}");
+            var getRequestTask = _httpClient.GetAsync($"api/compensation/{id}");
             var response = getRequestTask.Result;
 
             // Assert

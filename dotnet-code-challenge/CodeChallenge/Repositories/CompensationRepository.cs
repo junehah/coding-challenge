@@ -20,8 +20,8 @@ namespace CodeChallenge.Repositories
 
         public Compensation Add(Compensation compensation)
         {
-            //if (_employeeContext.Compensations.Any(c => c.Id == compensation.Id))
-            //    throw new Exception("A record with this Id already exists in the Compensation Table");
+            if (_employeeContext.Compensations.Any(c => c.Id == compensation.Id))
+                throw new Exception("A record with this Id already exists in the Compensation Table");
 
             _employeeContext.Compensations.Add(compensation);
 
@@ -30,8 +30,7 @@ namespace CodeChallenge.Repositories
 
         public Compensation GetById(string id)
         {
-            var compensation = _employeeContext.Compensations.Where(e => e.Employee.EmployeeId == id).FirstOrDefault();
-            //var compensation = new Compensation();
+            var compensation = _employeeContext.Compensations.Where(c=> c.Id == id).FirstOrDefault();
 
             return compensation;
         }
